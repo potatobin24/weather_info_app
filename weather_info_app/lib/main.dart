@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import "dart:math";
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -30,8 +30,9 @@ class WeatherForm extends StatefulWidget {
 class _WeatherFormState extends State<WeatherForm> {
   final TextEditingController _cityController = TextEditingController();
   String cityName = '';
-  String temperature = 'N/A';
-  String weatherCondition = 'N/A';
+  var temperature = Random().nextInt(10);
+  var weather = ['Rainy', 'Sunny', 'Cloudy', 'Partly Cloudy', 'Snowing', 'Windy'];
+  var weatherCondition = "None";
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,14 @@ class _WeatherFormState extends State<WeatherForm> {
               });
             },
           ),
-          ElevatedButtonExample(
-          
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                temperature = Random().nextInt(10);
+                weatherCondition = weather[Random().nextInt(weather.length)];
+              });
+            },
+            child: const Text("See Weather")
           ),
           const SizedBox(height: 20),
           const Text(
@@ -87,16 +94,13 @@ class FetchWeather extends State<ElevatedButtonExample> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ElevatedButton(
-            style: style,
-            onPressed: null,
-            child: const Text('Disabled'),
-          ),
           const SizedBox(height: 30),
           ElevatedButton(
             style: style,
-            onPressed: () {},
-            child: const Text('Enabled'),
+            onPressed: () {
+              
+            },
+            child: const Text('See Weather'),
           ),
         ],
       ),
