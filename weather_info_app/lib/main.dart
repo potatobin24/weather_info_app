@@ -14,37 +14,55 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text(appTitle),
         ),
-        body: const MyCustomForm(),
+        body: const WeatherForm(),
       ),
     );
   }
 }
 
-class MyCustomForm extends StatelessWidget {
-  const MyCustomForm({super.key});
+class WeatherForm extends StatefulWidget {
+  const WeatherForm({super.key});
+
+  @override
+  State<WeatherForm> createState() => _WeatherFormState();
+}
+
+class _WeatherFormState extends State<WeatherForm> {
+  final TextEditingController _cityController = TextEditingController();
+  String cityName = '';
+  String temperature = 'N/A';
+  String weatherCondition = 'N/A';
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextField(
-            decoration: InputDecoration(
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextField(
+            controller: _cityController,
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Enter city name',
             ),
+            onChanged: (text) {
+              setState(() {
+                cityName = text;
+              });
+            },
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
-            decoration: const InputDecoration(
-            ),
+          const SizedBox(height: 20),
+          const Text(
+            'Weather Information:',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
+          const SizedBox(height: 10),
+          Text('City: $cityName'),
+          Text('Temperature: $temperature'),
+          Text('Condition: $weatherCondition'),
+        ],
+      ),
     );
   }
 }
